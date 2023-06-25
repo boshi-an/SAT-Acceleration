@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Set the directory
+dir_path="cnf_benchmarks"
+time_path="perf/sequential.txt"
+
+# Set the program
+prog="./sequential"
+
+microtime() {
+    python -c 'import time; print(time.time())'
+}
+
+# Clear time records
+> $time_path
+
+# Loop through all files in the directory
+for file in "$dir_path"/*
+do
+    # Check if it is a file (not a directory)
+    if [ -f "$file" ]
+    then
+		# Total running time of this file
+		total_time=0
+        # Run the program with the file as an argument
+		START=$(microtime)
+		$prog "$file" > /dev/null
+		END=$(microtime)
+		DIFF=$(echo "$END - $START" | bc)
+		echo "$DIFF" >> $time_path
+    fi
+done

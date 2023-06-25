@@ -1,0 +1,12 @@
+# Make sat from microsat.c
+
+CC = gcc
+
+sat: microsat.c
+	$(CC) -o sat microsat.c
+
+build: microsat.c
+	$(CC) -g -o sat microsat.c
+
+clean: sat
+	rm -f sat
