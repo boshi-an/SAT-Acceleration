@@ -99,22 +99,12 @@ int *perturb_clauses(struct problem *P)
 	// 		swap_int(&P->first[i][j], &P->first[i][p]);
 	// 	}
 	// }
-	for (int i = P->nClauses - 1; i; i--)
-	{
-		for (int j = 0; j < i; j++)
-		{
-			if (P->len[j] > P->len[i])
-			{
-				swap_int(&P->len[i], &P->len[j]);
-				swap_int_pointer(&P->first[i], &P->first[j]);
-			}
-		}
-	}
-	for (int i = 0; i < P->nClauses; i++)
-	{
-		printf("%d\n", P->len[i]);
-	}
-	putchar('\n');
+	// for (int i = 1; i < P->nClauses; i++)
+	// {
+	// 	int p = rand() % (i + 1);
+	// 	swap_int(&P->len[i], &P->len[p]);
+	// 	swap_int_pointer(&P->first[i], &P->first[p]);
+	// }
 	free(map_buff);
 	return rmap;
 }
@@ -188,7 +178,7 @@ int parallel_solve(struct problem *P)
 	putchar('\n');
 	for (int i = 0; i < nThreads; i++)
 		free(rmap[i] - P->nVars);
-	free(rmap);
+	free(rmap - P->nVars);
 	return T[terminate_id].result;
 }
 
